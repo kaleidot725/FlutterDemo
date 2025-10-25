@@ -1,0 +1,39 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        
+        {
+            "name": "todo",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "todo (Android emulator)",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "emulator-5554",
+            "preLaunchTask": "Launch Android Emulator"
+        },
+        {
+            "name": "todo (iOS simulator)",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "96515933-6E13-4F43-B661-86943A8D41AC"
+        },
+        {
+            "name": "todo (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "todo (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}
