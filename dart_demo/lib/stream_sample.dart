@@ -88,7 +88,10 @@ Future<void> createStreamDemo() async {
     print("listener 2: $i");
   });
 
-  await for (final count in Stream<int>.periodic(const Duration(seconds: 1), (i) => i)) {
+  await for (final count in Stream<int>.periodic(
+    const Duration(seconds: 1),
+    (i) => i,
+  )) {
     print(count);
   }
 

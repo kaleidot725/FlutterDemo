@@ -14,9 +14,19 @@ void makeColor(int red, int green, int blue, [int? alpha]) {}
 
 void makeColor2(int red, int green, int blue, [int alpha = 0xFF]) {}
 
-void makeColor3({int red = 0x00, int green = 0x00, int blue = 0x00, int alpha = 0xFF}) {}
+void makeColor3({
+  int red = 0x00,
+  int green = 0x00,
+  int blue = 0x00,
+  int alpha = 0xFF,
+}) {}
 
-void makeColor4({required int red, required int green, required int blue, int alpha = 0xFF}) {}
+void makeColor4({
+  required int red,
+  required int green,
+  required int blue,
+  int alpha = 0xFF,
+}) {}
 
 int doubleValue(int x) {
   return x * 2;
@@ -28,9 +38,9 @@ void lamdaFunc() {
   final int Function(int) f = doubleValue;
   final result = f(8);
 
-  final int Function(int) f1 = (x) {
+  int f1(int x) {
     return x * 2;
-  };
+  }
 
   final result1 = f1(8);
 

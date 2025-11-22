@@ -5,7 +5,7 @@ void enumSample() {
   print(myShape.index);
   print(myShape.name);
 
-  Shape.values.forEach((shape) {
+  for (var shape in Shape.values) {
     print(shape.name);
-  });
+  }
 }

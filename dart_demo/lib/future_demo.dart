@@ -8,7 +8,10 @@ void futureDemo() {
 }
 
 Future<String> fetchUserName() {
-  var str = Future.delayed(const Duration(seconds: 1), () => throw 'User not found');
+  var str = Future.delayed(
+    const Duration(seconds: 1),
+    () => throw 'User not found',
+  );
 
   return str;
 }

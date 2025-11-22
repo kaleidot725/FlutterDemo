@@ -2,7 +2,7 @@ import 'dart:async';
 
 class Counter {
   int _count = 0;
-  StreamController<int> _controller = StreamController<int>();
+  final StreamController<int> _controller = StreamController<int>();
 
   Stream<int> get stream => _controller.stream;
 

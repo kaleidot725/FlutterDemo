@@ -7,9 +7,9 @@ void loopSample() {
   for (final element in list) {
     print("element = $element");
   }
-  list.forEach((element) {
+  for (var element in list) {
     print("element = $element");
-  });
+  }
 
   var flag = true;
   var count = 0;

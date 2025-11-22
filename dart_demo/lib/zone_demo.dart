@@ -1,7 +1,10 @@
 import 'dart:async';
 
 Future<String> fetchUsername() {
-  var str = Future.delayed(const Duration(seconds: 1), () => throw "User not found.");
+  var str = Future.delayed(
+    const Duration(seconds: 1),
+    () => throw "User not found.",
+  );
   return str;
 }
 
