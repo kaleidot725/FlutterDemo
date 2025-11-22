@@ -1,5 +1,6 @@
 class Animal {
   Animal(this.name);
+
   String greet() => 'hello';
   final String name;
 }
@@ -14,7 +15,7 @@ class Dog extends Animal {
 }
 
 void inheritanceSample() {
-  final dog = Dog();
+  final dog = Dog("name");
   print(dog.greet());
   print(dog.sayHello());
 }

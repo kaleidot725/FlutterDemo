@@ -1,5 +1,6 @@
 abstract class Animal {
   String get name;
+
   set name(String name);
 
   void sayHello();

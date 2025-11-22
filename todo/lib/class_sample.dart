@@ -1,6 +1,7 @@
 class Point {
   // コンストラクタ
   Point(this.x, this.y);
+
   // 名前付きコンストラクタ
   Point.zero() : x = 0, y = 0;
   int x;
@@ -20,6 +21,7 @@ class User {
 
   final int id;
   String _password;
+
   String get password => "******";
 
   set password(String newPassword) {
