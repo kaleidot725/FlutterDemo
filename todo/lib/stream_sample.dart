@@ -78,6 +78,16 @@ Future<void> createStreamDemo() async {
     print(e);
   }
 
+  final broadcastStream = languages().asBroadcastStream();
+  await Future.delayed(const Duration(milliseconds: 1000));
+  broadcastStream.listen((i) {
+    print("listener 1: $i");
+  });
+  await Future.delayed(const Duration(milliseconds: 1100));
+  broadcastStream.listen((i) {
+    print("listener 2: $i");
+  });
+
   await for (final count in Stream<int>.periodic(const Duration(seconds: 1), (i) => i)) {
     print(count);
   }
