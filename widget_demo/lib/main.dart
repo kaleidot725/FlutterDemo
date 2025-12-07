@@ -83,7 +83,12 @@ class HomeScreen extends StatelessWidget {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [const TextField(), Text(DateFormat.yMEd().format(DateTime.now())), Text(l10n.helloWorld)],
+          children: [
+            const TextField(),
+            Text(DateFormat.yMEd().format(DateTime.now())),
+            Text(l10n.helloWorld),
+            Image.asset("assets/circle.png"),
+          ],
         ),
       ),
     );
