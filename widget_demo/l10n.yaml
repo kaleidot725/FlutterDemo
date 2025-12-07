@@ -1,0 +1,8 @@
+## arbファイルのテンプレートファイル
+template-arb-file: app_ja.arb
+
+## コードジェネレータが生成するローカライズクラスのクラス名
+output-class: L10n
+
+## ローカライズクラスがnull許容であるかどうかを指定する
+nullable-getter: false

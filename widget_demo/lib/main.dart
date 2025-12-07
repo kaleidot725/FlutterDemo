@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:widget_demo/l10n/app_localizations.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,16 +14,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple)),
-      home: Scaffold(
-        appBar: AppBar(title: const Text('Empty Screen')),
-        body: Column(
-          children: [
-            AnimalView(text: 'mouse', color: Colors.yellow),
-            AnimalView(text: 'lizard', color: Colors.red),
-            Counter(),
-          ],
-        ),
-      ),
+      localizationsDelegates: L10n.localizationsDelegates,
+      supportedLocales: L10n.supportedLocales,
+      home: HomeScreen(),
+      // localizationsDelegates: [
+      //   GlobalWidgetsLocalizations.delegate,
+      //   GlobalMaterialLocalizations.delegate,
+      //   GlobalCupertinoLocalizations.delegate,
+      // ],
+      // supportedLocales: [Locale('ja', 'JP')],
     );
   }
 }
@@ -38,7 +39,7 @@ class AnimalView extends StatelessWidget {
       color: color,
       width: 100,
       height: 100,
-      child: Center(child: Text(text, textDirection: TextDirection.ltr)),
+      child: Center(child: Text(text)),
     );
   }
 }
@@ -65,7 +66,25 @@ class _CounterState extends State<Counter> {
         color: Colors.red,
         width: 100,
         height: 100,
-        child: Center(child: Text('$_count', textDirection: TextDirection.ltr)),
+        child: Center(child: Text('$_count')),
+      ),
+    );
+  }
+}
+
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    Intl.defaultLocale = Localizations.localeOf(context).toString();
+    final l10n = L10n.of(context);
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [const TextField(), Text(DateFormat.yMEd().format(DateTime.now())), Text(l10n.helloWorld)],
+        ),
       ),
     );
   }
