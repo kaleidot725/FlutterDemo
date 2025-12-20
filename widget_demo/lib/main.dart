@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:widget_demo/l10n/app_localizations.dart';
 
+import 'gen/assets.gen.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -87,7 +89,7 @@ class HomeScreen extends StatelessWidget {
             const TextField(),
             Text(DateFormat.yMEd().format(DateTime.now())),
             Text(l10n.helloWorld),
-            Image.asset("assets/circle.png"),
+            Assets.check.svg(width: 100, height: 100),
           ],
         ),
       ),
