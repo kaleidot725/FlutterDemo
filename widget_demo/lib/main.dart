@@ -19,12 +19,6 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: L10n.localizationsDelegates,
       supportedLocales: L10n.supportedLocales,
       home: HomeScreen(),
-      // localizationsDelegates: [
-      //   GlobalWidgetsLocalizations.delegate,
-      //   GlobalMaterialLocalizations.delegate,
-      //   GlobalCupertinoLocalizations.delegate,
-      // ],
-      // supportedLocales: [Locale('ja', 'JP')],
     );
   }
 }
@@ -95,4 +89,10 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+void readEnvironment() {
+  const endpoint = String.fromEnvironment('apiEndpoint');
+  const logLevel = int.fromEnvironment('logLevel');
+  const enableDebugMenu = bool.fromEnvironment('enableDebugMenu');
 }
