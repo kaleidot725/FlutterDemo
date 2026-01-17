@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'main.g.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -20,7 +23,20 @@ class MyApp extends StatelessWidget {
   }
 }
 
-final greetProvider = Provider((ref) => 'Hello World');
+@riverpod
+String greet(Ref ref) {
+  return 'Hello World';
+}
+
+@riverpod
+class CounterNotifier extends _$CounterNotifier {
+  @override
+  int build() => 0;
+
+  void increment() {
+    state = state + 1;
+  }
+}
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key, required this.title});
@@ -29,7 +45,8 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final counter = ref.watch(counterNotifierProvider);
+    final String greet = ref.read(greetProvider);
+    final counter = ref.watch(counterProvider);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -39,14 +56,14 @@ class HomePage extends ConsumerWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text("You have pushed the button this many times."),
+            Text("You have pushed the button this many times. $greet"),
             Text("$counter", style: Theme.of(context).textTheme.headlineMedium),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          ref.read(counterNotifierProvider.notifier).increment();
+          ref.read(counterProvider.notifier).increment();
         },
         tooltip: "Increment",
         child: const Icon(Icons.add),
@@ -54,16 +71,3 @@ class HomePage extends ConsumerWidget {
     );
   }
 }
-
-class CounterNotifier extends Notifier<int> {
-  @override
-  int build() => 0;
-
-  void increment() {
-    state = state + 1;
-  }
-}
-
-final counterNotifierProvider = NotifierProvider<CounterNotifier, int>(() {
-  return CounterNotifier();
-});
