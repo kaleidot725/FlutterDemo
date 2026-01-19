@@ -23,21 +23,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-@riverpod
-String greet(Ref ref) {
-  return 'Hello World';
-}
-
-@riverpod
-class CounterNotifier extends _$CounterNotifier {
-  @override
-  int build() => 0;
-
-  void increment() {
-    state = state + 1;
-  }
-}
-
 class HomePage extends ConsumerWidget {
   const HomePage({super.key, required this.title});
 
@@ -45,7 +30,7 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final String greet = ref.read(greetProvider);
+    final greet = ref.watch(asyncGreetProvider);
     final counter = ref.watch(counterProvider);
     return Scaffold(
       appBar: AppBar(
@@ -56,8 +41,22 @@ class HomePage extends ConsumerWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("You have pushed the button this many times. $greet"),
-            Text("$counter", style: Theme.of(context).textTheme.headlineMedium),
+            greet.when(
+              data: (value) => Text(
+                value,
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
+              loading: () => const CircularProgressIndicator(),
+              error: (error, stack) => Text("Error: $error"),
+            ),
+            counter.when(
+              data: (value) => Text(
+                "$value",
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
+              loading: () => const CircularProgressIndicator(),
+              error: (error, stack) => Text("Error: $error"),
+            ),
           ],
         ),
       ),
@@ -70,4 +69,54 @@ class HomePage extends ConsumerWidget {
       ),
     );
   }
+}
+
+@riverpod
+String greet(Ref ref) {
+  return 'Hello World';
+}
+
+@riverpod
+class CounterNotifier extends _$CounterNotifier {
+  @override
+  Future<int> build() async {
+    await Future.delayed(const Duration(seconds: 1));
+    return 0;
+  }
+
+  void increment() async {
+    final currentValue = state.value;
+    if (currentValue == null) {
+      return;
+    }
+
+    state = AsyncLoading();
+    await Future.delayed(const Duration(seconds: 1));
+    state = AsyncData(currentValue + 1);
+  }
+}
+
+@riverpod
+Future<String> asyncGreet(Ref ref) async {
+  await Future.delayed(const Duration(seconds: 1));
+  return 'Hello World';
+}
+
+@riverpod
+Raw<Future<int>> fakeFirstApi(Ref ref) async {
+  await Future.delayed(const Duration(seconds: 1));
+  return 1;
+}
+
+@riverpod
+Raw<Future<int>> fakeSecondApi(Ref ref) async {
+  await Future.delayed(const Duration(seconds: 1));
+  return 2;
+}
+
+@riverpod
+Future<int> fakeSumApi(Ref ref) async {
+  final firstApiResult = await ref.watch(fakeFirstApiProvider);
+  final secondApiResult = await ref.watch(fakeSecondApiProvider);
+  return firstApiResult + secondApiResult;
 }
