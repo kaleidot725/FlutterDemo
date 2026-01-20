@@ -252,23 +252,30 @@ final class FakeSumApiProvider
 String _$fakeSumApiHash() => r'd28068318cbfa4f5ffefd200fbbdfda8d4d76187';
 
 @ProviderFor(PointNotifier)
-final pointProvider = PointNotifierProvider._();
+final pointProvider = PointNotifierFamily._();
 
 final class PointNotifierProvider
     extends $NotifierProvider<PointNotifier, Point> {
-  PointNotifierProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'pointProvider',
-        isAutoDispose: true,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
+  PointNotifierProvider._({
+    required PointNotifierFamily super.from,
+    required (int, int) super.argument,
+  }) : super(
+         retry: null,
+         name: r'pointProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
 
   @override
   String debugGetCreateSourceHash() => _$pointNotifierHash();
+
+  @override
+  String toString() {
+    return r'pointProvider'
+        ''
+        '$argument';
+  }
 
   @$internal
   @override
@@ -281,12 +288,44 @@ final class PointNotifierProvider
       providerOverride: $SyncValueProvider<Point>(value),
     );
   }
+
+  @override
+  bool operator ==(Object other) {
+    return other is PointNotifierProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
 }
 
-String _$pointNotifierHash() => r'b688fc7b9f7be6750dda36343e35623fba58eca0';
+String _$pointNotifierHash() => r'465c14743feb63a51804db81c1e2c244ea42300f';
+
+final class PointNotifierFamily extends $Family
+    with $ClassFamilyOverride<PointNotifier, Point, Point, Point, (int, int)> {
+  PointNotifierFamily._()
+    : super(
+        retry: null,
+        name: r'pointProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  PointNotifierProvider call(int x, int y) =>
+      PointNotifierProvider._(argument: (x, y), from: this);
+
+  @override
+  String toString() => r'pointProvider';
+}
 
 abstract class _$PointNotifier extends $Notifier<Point> {
-  Point build();
+  late final _$args = ref.$arg as (int, int);
+  int get x => _$args.$1;
+  int get y => _$args.$2;
+
+  Point build(int x, int y);
   @$mustCallSuper
   @override
   void runBuild() {
@@ -299,6 +338,6 @@ abstract class _$PointNotifier extends $Notifier<Point> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    element.handleCreate(ref, () => build(_$args.$1, _$args.$2));
   }
 }

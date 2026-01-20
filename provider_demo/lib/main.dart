@@ -32,9 +32,8 @@ class HomePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final greet = ref.watch(asyncGreetProvider);
     final counter = ref.watch(counterProvider);
-    final point = ref.watch(pointProvider);
-    final pointX = ref.watch(pointProvider.select((value) => value.x));
-    final pointY = ref.watch(pointProvider.select((value) => value.y));
+    final pointNotifier = pointProvider(100, 200);
+    final point = ref.watch(pointNotifier);
 
     return Scaffold(
       appBar: AppBar(
@@ -66,25 +65,25 @@ class HomePage extends ConsumerWidget {
                 Text("x: ${point.x} y: ${point.y}"),
                 ElevatedButton(
                   onPressed: () {
-                    ref.read(pointProvider.notifier).move(point.x + 1, point.y);
+                    ref.read(pointNotifier.notifier).move(point.x + 1, point.y);
                   },
                   child: const Text("→"),
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    ref.read(pointProvider.notifier).move(point.x, point.y + 1);
+                    ref.read(pointNotifier.notifier).move(point.x, point.y + 1);
                   },
                   child: const Text("↑"),
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    ref.read(pointProvider.notifier).move(point.x - 1, point.y);
+                    ref.read(pointNotifier.notifier).move(point.x - 1, point.y);
                   },
                   child: const Text("←"),
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    ref.read(pointProvider.notifier).move(point.x, point.y - 1);
+                    ref.read(pointNotifier.notifier).move(point.x, point.y - 1);
                   },
                   child: const Text("↓"),
                 ),
@@ -164,8 +163,8 @@ class Point {
 @riverpod
 class PointNotifier extends _$PointNotifier {
   @override
-  Point build() {
-    return Point(0, 0);
+  Point build(int x, int y) {
+    return Point(x, y);
   }
 
   void move(int x, int y) {
