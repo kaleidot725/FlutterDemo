@@ -250,3 +250,55 @@ final class FakeSumApiProvider
 }
 
 String _$fakeSumApiHash() => r'd28068318cbfa4f5ffefd200fbbdfda8d4d76187';
+
+@ProviderFor(PointNotifier)
+final pointProvider = PointNotifierProvider._();
+
+final class PointNotifierProvider
+    extends $NotifierProvider<PointNotifier, Point> {
+  PointNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'pointProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$pointNotifierHash();
+
+  @$internal
+  @override
+  PointNotifier create() => PointNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(Point value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<Point>(value),
+    );
+  }
+}
+
+String _$pointNotifierHash() => r'b688fc7b9f7be6750dda36343e35623fba58eca0';
+
+abstract class _$PointNotifier extends $Notifier<Point> {
+  Point build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final ref = this.ref as $Ref<Point, Point>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<Point, Point>,
+              Point,
+              Object?,
+              Object?
+            >;
+    element.handleCreate(ref, build);
+  }
+}

@@ -32,6 +32,10 @@ class HomePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final greet = ref.watch(asyncGreetProvider);
     final counter = ref.watch(counterProvider);
+    final point = ref.watch(pointProvider);
+    final pointX = ref.watch(pointProvider.select((value) => value.x));
+    final pointY = ref.watch(pointProvider.select((value) => value.y));
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -56,6 +60,35 @@ class HomePage extends ConsumerWidget {
               ),
               loading: () => const CircularProgressIndicator(),
               error: (error, stack) => Text("Error: $error"),
+            ),
+            Column(
+              children: [
+                Text("x: ${point.x} y: ${point.y}"),
+                ElevatedButton(
+                  onPressed: () {
+                    ref.read(pointProvider.notifier).move(point.x + 1, point.y);
+                  },
+                  child: const Text("→"),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    ref.read(pointProvider.notifier).move(point.x, point.y + 1);
+                  },
+                  child: const Text("↑"),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    ref.read(pointProvider.notifier).move(point.x - 1, point.y);
+                  },
+                  child: const Text("←"),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    ref.read(pointProvider.notifier).move(point.x, point.y - 1);
+                  },
+                  child: const Text("↓"),
+                ),
+              ],
             ),
           ],
         ),
@@ -119,4 +152,23 @@ Future<int> fakeSumApi(Ref ref) async {
   final firstApiResult = await ref.watch(fakeFirstApiProvider);
   final secondApiResult = await ref.watch(fakeSecondApiProvider);
   return firstApiResult + secondApiResult;
+}
+
+class Point {
+  Point(this.x, this.y);
+
+  int x;
+  int y;
+}
+
+@riverpod
+class PointNotifier extends _$PointNotifier {
+  @override
+  Point build() {
+    return Point(0, 0);
+  }
+
+  void move(int x, int y) {
+    state = Point(x, y);
+  }
 }
